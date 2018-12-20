@@ -34,10 +34,4 @@ object Server extends App {
       .run()
 
   handler.failed.foreach { case ex: Exception ⇒ log.error(ex, "Failed to bind to {}:{}", httpInterface, httpPort) }
-
-  StdIn.readLine(s"\nPress RETURN to stop...")
-
-  handler
-    .flatMap(binding ⇒ binding.unbind())
-    .onComplete(_ ⇒ actorSystem.terminate())
 }

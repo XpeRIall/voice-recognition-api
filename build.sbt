@@ -76,3 +76,9 @@ wartremoverWarnings ++= Warts.unsafe
 test in assembly := {}
 parallelExecution in Test := false
 fork in Test := true
+
+//docker container info
+
+mainClass in Compile := Some("com.xperiall.http.server.Server")
+enablePlugins(JavaAppPackaging)
+enablePlugins(DockerPlugin)

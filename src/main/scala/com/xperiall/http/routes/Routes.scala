@@ -8,7 +8,7 @@ package com.xperiall.http.routes
 
 import akka.http.scaladsl.server.Route
 import com.google.cloud.speech.v1.SpeechRecognitionResult
-import com.xperiall.http.model.{ ApiMessage, ApiStatusMessages, Model, VoiceRecognitionRequest }
+import com.xperiall.http.model.{ ApiMessage, ApiStatusMessages, VoiceRecognitionRequest }
 import com.xperiall.http.repository.Repository
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
