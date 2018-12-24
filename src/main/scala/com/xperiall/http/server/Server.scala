@@ -7,31 +7,14 @@
 package com.xperiall.http.server
 
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.Http.{ IncomingConnection, ServerBinding }
-import akka.http.scaladsl.server.Route._
-import akka.stream.scaladsl.{ Sink, Source }
 import com.xperiall.http.routes.Routes
-
-import scala.concurrent.Future
-import scala.io.StdIn
 
 object Server extends App {
 
   import com.xperiall.http.config.ServerSettings._
 
-  val server: Source[IncomingConnection, Future[ServerBinding]] =
-    Http(actorSystem).bind(httpInterface, httpPort)
+  val server =
+    Http(actorSystem).bindAndHandle(Routes.availableRoutes, httpInterface, httpPort)
 
   log.info(s"\nAkka HTTP Server - Version ${actorSystem.settings.ConfigVersion} - running at http://$httpInterface:$httpPort/")
-
-  val handler: Future[ServerBinding] =
-    server
-      .to(
-        Sink.foreach {
-          connection ⇒
-            connection.handleWithAsyncHandler(asyncHandler(Routes.availableRoutes))
-        })
-      .run()
-
-  handler.failed.foreach { case ex: Exception ⇒ log.error(ex, "Failed to bind to {}:{}", httpInterface, httpPort) }
 }
